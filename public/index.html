@@ -7,39 +7,109 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> <!-- ❶ bootstrap 사용 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- ❶ bootstrap 사용 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
-    <link rel="stylesheet" href="index.css" >
+    <link rel="stylesheet" href="index.css">
     <title>Document</title>
 </head>
 <body>
-    <div class="page-content page-container" id="page-content">
-        <div class="padding">
-            <div class="row container d-flex justify-content-center">
-                <div class="col-lg-12">
-                    <div class="card px-3">
+<div class="page-content page-container" id="page-content">
+    <div class="padding">
+        <div class="row container d-flex justify-content-center">
+            <div class="col-lg-12">
+                <div class="card px-3">
+                    <form id="calculatorForm" METHOD="GET">
                         <div class="card-body">
                             <h5 class="mb-4">손익 계산서</h5>
 
                             <div class="form-group card-title">
-                                <label for="test">가격</label>
-                                <input id="test" type="text" class="form-control todo-list-input" placeholder="원래 가격은?">
+                                <label for="supplyPrice">공급가격</label><span class="korean-number"></span>
+                                <input id="supplyPrice" type="text" class="form-control todo-list-input money-number"
+                                       placeholder="100,000,000">
+                            </div>
+
+                            <div class="form-group card-title">
+                                <label for="cash">현금(이미 납부금액)</label>
+                                <input id="cash" type="text" class="form-control todo-list-input money-number"
+                                       placeholder="100,000,000">
+                            </div>
+
+                            <div class="form-group card-title">
+                                <label for="loanAmount">대출금액</label>
+                                <input id="loanAmount" type="text" class="form-control todo-list-input money-number"
+                                       placeholder="100,000,000">
+                            </div>
+
+                            <div class="form-group card-title">
+                                <label for="interestRate">금리(%)</label>
+                                <input id="interestRate" type="number"
+                                       class="form-control todo-list-input percentageInput" min="0" max="100" step="0.01"
+                                       placeholder="5.90%">
+                            </div>
+
+                            <div class="form-group card-title">
+                                <label for="principalAndInterest">한달 원리금</label>
+                                <input id="principalAndInterest" type="text"
+                                       class="form-control todo-list-input money-number" placeholder="100,000,000">
                             </div>
 
                             <button class="add btn btn-primary font-weight-bold todo-list-add-btn mt-4">submit</button>
 
                         </div>
-                    </div>
+                    </form>
                 </div>
+
+
+                <h5 class="mt-4">계산 결과</h5>
+                <ul>
+                    <li>전체 기간 : </li>
+                    <li>총 이자 : </li>
+                    <li>총 금액(이자 + 대출금 + 현금) : </li>
+                    <li>공급가격과 차이 : </li>
+                    <li>최소 이득 비용 : </li>
+                </ul>
+
+                <table class="table mt-4">
+                    <thead>
+                    <tr>
+                        <th scope="col">회차</th>
+                        <th scope="col">할부상환일</th>
+                        <th scope="col">원금</th>
+                        <th scope="col">이자</th>
+                        <th scope="col">원금</th>
+                        <th scope="col">금리</th>
+                        <th scope="col">대출잔액</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script> <!-- ❹ AJAX 쿼리를 사용가능하게 jquery 사용 -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="index.js"></script> <!-- ➎ index.js 스크립트 사용 -->
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- ❹ AJAX 쿼리를 사용가능하게 jquery 사용 -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script src="index.js"></script> <!-- ➎ index.js 스크립트 사용 -->
 </body>
 </html>

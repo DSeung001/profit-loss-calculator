@@ -1,13 +1,14 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/unrolled/render"
 	"github.com/urfave/negroni"
 	"log"
 	"net/http"
+	"profit-loss-calculator.com/utils"
+	"strconv"
 )
 
 // 자동 랜더링
@@ -42,23 +43,23 @@ func MakeWebHandler() http.Handler {
 
 func getCalculatorHandler(w http.ResponseWriter, r *http.Request) {
 
-	// r.Body 빔
-	fmt.Println(r.Body)
+	var queryParam = r.URL.Query()
 	var calValue CalValue
-	// err : EOF 발생
-	err := json.NewDecoder(r.Body).Decode(&calValue)
 
-	if err != nil {
-		log.Fatal(err)
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
+	// 에러 핸들링 필요
+	calValue.supplyPrice, _ = utils.InNumberCharRemove(queryParam["supplyPrice"][0])
+	calValue.cash, _ = utils.InNumberCharRemove(queryParam["cash"][0])
+	calValue.loanAmount, _ = utils.InNumberCharRemove(queryParam["loanAmount"][0])
+	calValue.interestRate, _ = strconv.ParseFloat(queryParam["interestRate"][0], 64)
+	calValue.principalAndInterest, _ = utils.InNumberCharRemove(queryParam["principalAndInterest"][0])
 
-	list := make(installmentSlice, 400)
+	var limit = 10
+	list := make(installmentSlice, 0)
 	var idx = 1
 	for calValue.loanAmount > 0 {
+		fmt.Println(idx)
 		// 이자 계산
-		interest := int(float64(calValue.loanAmount) * calValue.interestRate / 100)
+		interest := int(float64(calValue.loanAmount)*calValue.interestRate/100) / 12
 
 		// 원금 계산
 		principal := calValue.principalAndInterest - interest
@@ -69,16 +70,24 @@ func getCalculatorHandler(w http.ResponseWriter, r *http.Request) {
 
 		// 날짜 계산해서 사이즈 지정 필요
 
-		list = append(list,
-			Installment{
-				number:               idx,
-				principal:            principal,
-				interest:             interest,
-				principalAndInterest: calValue.principalAndInterest,
-				loanBalance:          loanBalance,
-			})
+		data := Installment{
+			number:               idx,
+			principal:            principal,
+			interest:             interest,
+			principalAndInterest: calValue.principalAndInterest,
+			loanBalance:          loanBalance,
+		}
+		fmt.Println("data")
+		fmt.Println(data)
+		list = append(list, data)
+		idx++
+
+		if idx > limit {
+			break
+		}
 	}
 
+	fmt.Println(list)
 	rd.JSON(w, http.StatusOK, list)
 }
 

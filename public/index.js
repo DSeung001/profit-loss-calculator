@@ -12,13 +12,13 @@
             $.ajax({
                 url: "/profitLossCalculator",
                 type: "GET",
-                data: JSON.stringify({
+                data: {
                     supplyPrice: supplyPrice,
                     cash: cash,
                     loanAmount: loanAmount,
                     interestRate: interestRate,
                     principalAndInterest: principalAndInterest
-                }),
+                },
                 success: function(data) {
                     console.log(data)
                 },

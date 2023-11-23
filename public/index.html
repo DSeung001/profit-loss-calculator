@@ -25,7 +25,7 @@
                             <h5 class="mb-4">손익 계산서</h5>
 
                             <div class="form-group card-title">
-                                <label for="supplyPrice">공급가격</label><span class="korean-number"></span>
+                                <label for="supplyPrice">공급가격</label>
                                 <input id="supplyPrice" type="text" class="form-control todo-list-input money-number"
                                        placeholder="100,000,000">
                             </div>
@@ -45,7 +45,8 @@
                             <div class="form-group card-title">
                                 <label for="interestRate">금리(%)</label>
                                 <input id="interestRate" type="number"
-                                       class="form-control todo-list-input percentageInput" min="0" max="100" step="0.01"
+                                       class="form-control todo-list-input percentageInput" min="0" max="100"
+                                       step="0.01"
                                        placeholder="5.90%">
                             </div>
 
@@ -64,11 +65,17 @@
 
                 <h5 class="mt-4">계산 결과</h5>
                 <ul>
-                    <li>전체 기간 : </li>
-                    <li>총 이자 : </li>
-                    <li>총 금액(이자 + 대출금 + 현금) : </li>
-                    <li>공급가격과 차이 : </li>
-                    <li>최소 이득 비용 : </li>
+                    <li>전체 기간 :</li>
+                    <li>총 이자 :
+                        <span id="totalInterest" class="mr-3"></span>
+                        <span id="totalInterestKR"></span>
+                    </li>
+                    <li>총 금액(이자 + 대출금 + 현금) :
+                        <span id="totalAmount" class="mr-3"></span>
+                        <span id="totalAmountKR"></span>
+                    </li>
+                    <li>공급가격과 차이 : <span id="difference"></span></li>
+                    <li>최소 이득 비용 : <span id="nothingLose"></span></li>
                 </ul>
 
                 <table class="table mt-4">

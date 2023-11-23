@@ -51,7 +51,6 @@ func getCalculatorHandler(w http.ResponseWriter, r *http.Request) {
 	calValue.interestRate, _ = strconv.ParseFloat(queryParam["interestRate"][0], 64)
 	calValue.principalAndInterest, _ = utils.InNumberCharRemove(queryParam["principalAndInterest"][0])
 
-	var limit = 10
 	list := make(installmentSlice, 0)
 	var idx = 1
 	for calValue.loanAmount > 0 {
@@ -77,10 +76,6 @@ func getCalculatorHandler(w http.ResponseWriter, r *http.Request) {
 
 		list = append(list, data)
 		idx++
-
-		if idx > limit {
-			break
-		}
 	}
 
 	// 반환 값에 필드가 소문자면 반환되지 않음

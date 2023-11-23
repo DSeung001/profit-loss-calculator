@@ -20,7 +20,8 @@
                     principalAndInterest: principalAndInterest
                 },
                 success: function(data) {
-                    console.log(data)
+                    calSuccessHandler(data)
+
                 },
                 fail: function(jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR)
@@ -29,7 +30,7 @@
             })
         })
 
-        setVar()
+        setInput()
     });
 })(jQuery);
 
@@ -39,8 +40,7 @@ let loanAmount = 94000000
 let interestRate = 5.9
 let principalAndInterest = 557548
 
-
-function setVar(){
+function setInput(){
     $("#supplyPrice").val(supplyPrice);
     $("#cash").val(cash);
     $("#loanAmount").val(loanAmount);
@@ -54,11 +54,29 @@ function setVar(){
 }
 
 function getVar() {
-    supplyPrice = $("#supplyPrice").val();
-    cash = $("#cash").val();
-    loanAmount = $("#loanAmount").val();
-    interestRate = $("#interestRate").val();
-    principalAndInterest = $("#principalAndInterest").val();
+    supplyPrice = noComma($("#supplyPrice").val());
+    cash = noComma($("#cash").val());
+    loanAmount = noComma($("#loanAmount").val());
+    interestRate = noComma($("#interestRate").val());
+    principalAndInterest = noComma($("#principalAndInterest").val());
+}
+
+function calSuccessHandler(data){
+    let totalInterest = 0
+    for (let key in data) {
+        totalInterest += data[key].interest
+    }
+
+    $("#totalInterest").text(totalInterest.toLocaleString())
+    $("#totalAmount").text((totalInterest + supplyPrice).toLocaleString())
+
+    $("#totalInterestKR").text(numberToKoreanCurrency(totalInterest));
+    $("#totalAmountKR").text(numberToKoreanCurrency(totalInterest + supplyPrice));
+}
+
+// comma 삭제
+function noComma(_str) {
+    return Number(_str.replace(/,/g, ''));
 }
 
 // Text를 toLocaleString() 함수를 이용하여 숫자에 콤마를 추가
@@ -81,4 +99,11 @@ function getNumber(_str) {
         }
     }
     return Number(out.join(''));
+}
+
+// 한글로 수 변경
+function numberToKoreanCurrency(number) {
+
+
+    return number+"원";
 }

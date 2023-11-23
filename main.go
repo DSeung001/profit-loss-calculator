@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/unrolled/render"
 	"github.com/urfave/negroni"
@@ -23,12 +22,11 @@ type CalValue struct {
 }
 
 type Installment struct {
-	number int
-	//date                 string
-	principal            int
-	interest             int
-	principalAndInterest int
-	loanBalance          int
+	Number               int `json:"number"`
+	Principal            int `json:"principal"`
+	Interest             int `json:"interest"`
+	PrincipalAndInterest int `json:"principal and interest"`
+	LoanBalance          int `json:"loan balance"`
 }
 
 // 나중에 기간에 맞게 make로 바꿔서 slice 안쓰게 수정 필요
@@ -57,7 +55,6 @@ func getCalculatorHandler(w http.ResponseWriter, r *http.Request) {
 	list := make(installmentSlice, 0)
 	var idx = 1
 	for calValue.loanAmount > 0 {
-		fmt.Println(idx)
 		// 이자 계산
 		interest := int(float64(calValue.loanAmount)*calValue.interestRate/100) / 12
 
@@ -66,19 +63,18 @@ func getCalculatorHandler(w http.ResponseWriter, r *http.Request) {
 
 		// 대출잔액
 		loanBalance := calValue.loanAmount - principal
-		calValue.loanAmount -= loanBalance
+		calValue.loanAmount = loanBalance
 
 		// 날짜 계산해서 사이즈 지정 필요
 
 		data := Installment{
-			number:               idx,
-			principal:            principal,
-			interest:             interest,
-			principalAndInterest: calValue.principalAndInterest,
-			loanBalance:          loanBalance,
+			Number:               idx,
+			Principal:            principal,
+			Interest:             interest,
+			PrincipalAndInterest: calValue.principalAndInterest,
+			LoanBalance:          loanBalance,
 		}
-		fmt.Println("data")
-		fmt.Println(data)
+
 		list = append(list, data)
 		idx++
 
@@ -87,7 +83,7 @@ func getCalculatorHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	fmt.Println(list)
+	// 반환 값에 필드가 소문자면 반환되지 않음
 	rd.JSON(w, http.StatusOK, list)
 }
 

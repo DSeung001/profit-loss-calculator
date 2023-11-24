@@ -37,17 +37,17 @@
 let supplyPrice = 156830000
 let cash = 62830000
 let loanAmount = 94000000
-let monthPayment = 360
 let interestRate = 5.9
 let principalAndInterest = 557548
+let targetMonth = 360
 
 function setInput(){
     $("#supplyPrice").val(supplyPrice);
     $("#cash").val(cash);
     $("#loanAmount").val(loanAmount);
-    $("#monthPayment").val(monthPayment);
     $("#interestRate").val(interestRate);
     $("#principalAndInterest").val(principalAndInterest);
+    $("#targetMonth").val(targetMonth);
 
     updateTextView($("#supplyPrice"));
     updateTextView($("#cash"));
@@ -59,9 +59,9 @@ function getVar() {
     supplyPrice = noComma($("#supplyPrice").val());
     cash = noComma($("#cash").val());
     loanAmount = noComma($("#loanAmount").val());
-    monthPayment = noComma($("#monthPayment").val());
     interestRate = noComma($("#interestRate").val());
     principalAndInterest = noComma($("#principalAndInterest").val());
+    targetMonth = noComma($("#targetMonth").val());
 }
 
 function calSuccessHandler(data){
@@ -70,11 +70,24 @@ function calSuccessHandler(data){
         totalInterest += data[key].interest
     }
 
+    $("#totalMonth").text(Object.keys(data).length+"개월")
     $("#totalInterest").text(totalInterest.toLocaleString())
     $("#totalAmount").text((totalInterest + supplyPrice).toLocaleString())
 
     $("#totalInterestKR").text(numberToKoreanCurrency(totalInterest));
     $("#totalAmountKR").text(numberToKoreanCurrency(totalInterest + supplyPrice));
+
+    let untilInterest = 0
+    for (i =0 ; i < targetMonth; i++){
+        untilInterest += data[i].interest
+    }
+
+    $("#goalMonth").text(targetMonth+"개월")
+    $("#untilInterest").text(untilInterest.toLocaleString())
+    $("#untilAmount").text((untilInterest + supplyPrice).toLocaleString())
+
+    $("#untilInterestKR").text(numberToKoreanCurrency(untilInterest));
+    $("#untilAmountKR").text(numberToKoreanCurrency(untilInterest + supplyPrice));
 }
 
 // comma 삭제

@@ -22,7 +22,7 @@
                 <div class="card px-3">
                     <form id="calculatorForm" METHOD="GET">
                         <div class="card-body">
-                            <h5 class="mb-4">손익 계산서</h5>
+                            <h5 class="mb-4">기본정보</h5>
 
                             <div class="form-group card-title">
                                 <label for="supplyPrice">공급가격</label>
@@ -43,15 +43,6 @@
                             </div>
 
 
-                            <!-- 총 납부 개월, 금리, 한달 원리금은 3개가 연관관계-->
-                            <div class="form-group card-title">
-                                <label for="monthPayment">납부 개월</label>
-                                <input id="monthPayment" type="number"
-                                       class="form-control todo-list-input percentageInput" min="0" max="1000"
-                                       step="1"
-                                       placeholder="360">
-                            </div>
-
                             <div class="form-group card-title">
                                 <label for="interestRate">금리(%)</label>
                                 <input id="interestRate" type="number"
@@ -66,29 +57,46 @@
                                        class="form-control todo-list-input money-number" placeholder="100,000,000">
                             </div>
 
+                            <div class="form-group card-title">
+                                <label for="targetMonth">목표 달</label>
+                                <input id="targetMonth" type="number" class="form-control todo-list-input money-number"
+                                       step="1" min="1" max="1000" placeholder="360">
+                            </div>
+
                             <button class="add btn btn-primary font-weight-bold todo-list-add-btn mt-4">submit</button>
 
                         </div>
                     </form>
+                    <h5 class="mt-4">계산 결과</h5>
+                    <ul>
+                        <li>전체 기간 :
+                            <span id="totalMonth"></span>
+                        </li>
+                        <li>총 이자 :
+                            <span id="totalInterest" class="mr-3"></span>
+                            <span id="totalInterestKR"></span>
+                        </li>
+                        <li>총 금액(이자 + 대출금 + 현금) :
+                            <span id="totalAmount" class="mr-3"></span>
+                            <span id="totalAmountKR"></span>
+                        </li>
+
+                        <li>목표 달 :
+                            <span id="goalMonth"></span>
+                        </li>
+                        <li>총 이자 :
+                            <span id="untilInterest" class="mr-3"></span>
+                            <span id="untilInterestKR"></span>
+                        </li>
+                        <li>총 금액(이자 + 대출금 + 현금) :
+                            <span id="untilAmount" class="mr-3"></span>
+                            <span id="untilAmountKR"></span>
+                        </li>
+                    </ul>
                 </div>
 
 
-                <h5 class="mt-4">계산 결과</h5>
-                <ul>
-                    <li>전체 기간 :</li>
-                    <li>총 이자 :
-                        <span id="totalInterest" class="mr-3"></span>
-                        <span id="totalInterestKR"></span>
-                    </li>
-                    <li>총 금액(이자 + 대출금 + 현금) :
-                        <span id="totalAmount" class="mr-3"></span>
-                        <span id="totalAmountKR"></span>
-                    </li>
-                    <li>공급가격과 차이 : <span id="difference"></span></li>
-                    <li>최소 이득 비용 : <span id="nothingLose"></span></li>
-                </ul>
-
-                <table class="table mt-4">
+             <!--   <table class="table mt-4">
                     <thead>
                     <tr>
                         <th scope="col">회차</th>
@@ -111,7 +119,7 @@
                         <td>@mdo</td>
                     </tr>
                     </tbody>
-                </table>
+                </table>-->
             </div>
         </div>
     </div>

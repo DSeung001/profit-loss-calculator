@@ -37,6 +37,7 @@
 let supplyPrice = 156830000
 let cash = 62830000
 let loanAmount = 94000000
+let monthPayment = 360
 let interestRate = 5.9
 let principalAndInterest = 557548
 
@@ -44,6 +45,7 @@ function setInput(){
     $("#supplyPrice").val(supplyPrice);
     $("#cash").val(cash);
     $("#loanAmount").val(loanAmount);
+    $("#monthPayment").val(monthPayment);
     $("#interestRate").val(interestRate);
     $("#principalAndInterest").val(principalAndInterest);
 
@@ -57,6 +59,7 @@ function getVar() {
     supplyPrice = noComma($("#supplyPrice").val());
     cash = noComma($("#cash").val());
     loanAmount = noComma($("#loanAmount").val());
+    monthPayment = noComma($("#monthPayment").val());
     interestRate = noComma($("#interestRate").val());
     principalAndInterest = noComma($("#principalAndInterest").val());
 }
@@ -103,7 +106,18 @@ function getNumber(_str) {
 
 // 한글로 수 변경
 function numberToKoreanCurrency(number) {
+    let units = ['', '만', '억', '조', '경'];
+    let result = '';
+    let unitIndex = 0;
+    let numArr = number.toString().split('').reverse();
 
+    // 4자리씩 끊어서 한글 돈 단위로 표시
+    for (let i = 0; i < numArr.length; i++) {
+        if (i % 4 === 0) {
+            result = units[unitIndex++] + result;
+        }
+        result = numArr[i] + result;
+    }
 
-    return number+"원";
+    return result+'원';
 }
